@@ -1,6 +1,7 @@
-
 using CQRSDemo.Api.Context;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace CQRSDemo.Api
 {
@@ -10,7 +11,10 @@ namespace CQRSDemo.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
+
             // Add services to the container.
+            builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+
             builder.Services.AddDbContext<ReadDbContext>(cfg=> cfg.UseSqlServer("name=ReadDb"));
             builder.Services.AddDbContext<WriteDbContext>(cfg=> cfg.UseSqlServer("name=WriteDb"));
 
