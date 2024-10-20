@@ -1,4 +1,7 @@
 
+using CQRSDemo.Api.Context;
+using Microsoft.EntityFrameworkCore;
+
 namespace CQRSDemo.Api
 {
     public class Program
@@ -8,6 +11,8 @@ namespace CQRSDemo.Api
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<ReadDbContext>(cfg=> cfg.UseSqlServer("name=ReadDb"));
+            builder.Services.AddDbContext<WriteDbContext>(cfg=> cfg.UseSqlServer("name=WriteDb"));
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
