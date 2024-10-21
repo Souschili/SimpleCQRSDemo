@@ -4,14 +4,14 @@ using MediatR;
 
 namespace CQRSDemo.Api.Application.Orders.Command.OrderCreate
 {
-    public class OrderCreateCommandHandler : IRequestHandler<OrderCreateCommand, Unit>
+    public class OrderCreateCommandHandler : IRequestHandler<OrderCreateCommand, int>
     {
         private readonly WriteDbContext _dbContext;
         public OrderCreateCommandHandler(WriteDbContext dbContext)
         {
             this._dbContext = dbContext;
         }
-        public async Task<Unit> Handle(OrderCreateCommand request,
+        public async Task<int> Handle(OrderCreateCommand request,
             CancellationToken cancellationToken)
         {
             var order = new Order
@@ -24,7 +24,7 @@ namespace CQRSDemo.Api.Application.Orders.Command.OrderCreate
             await _dbContext.AddAsync(order);
             await _dbContext.SaveChangesAsync();
 
-            return Unit.Value;
+            return order.Id;
         }
     }
 }
